@@ -66,8 +66,14 @@ namespace CoffeeEditor
 
         private void LeftTextBoxChanged(EventArg eventArg)
         {
+            this.Invoke(new MethodInvoker(() => ffff(eventArg)));
+
+        }
+
+        private void ffff(EventArg eventArg)
+        {
             if (!tabControl1.SelectedTab.Text.EndsWith(notSavedSymbol)
-                && tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Count > 0)
+               && tabControl1.TabPages[tabControl1.SelectedIndex].Controls.Count > 0)
             {
                 var editorUserCon =
                     (WindowsFormsControlLibrary1.Editor)tabControl1.TabPages[tabControl1.SelectedIndex].Controls[0];

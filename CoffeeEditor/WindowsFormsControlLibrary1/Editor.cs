@@ -3,6 +3,8 @@ using System.IO;
 using System.Windows.Forms;
 
 using EventPublisher;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace WindowsFormsControlLibrary1
 {
@@ -38,12 +40,30 @@ namespace WindowsFormsControlLibrary1
             }
         }
 
-
+        string _txtLeftText;
         private void txtLeft_TextChanged(object sender, EventArgs e)
         {
-            var eventArg = new EventArg(Id, txtLeft.Text);
+      
+            if(string.IsNullOrEmpty(txtLeft.Text))
+            {
+                return;
+            }
 
-            EventContainer.PublishEvent(EventPublisher.Events.LeftTextBoxChanged.ToString(), eventArg);
+            _txtLeftText = txtLeft.Text;
+
+            Task.Run(() => Lapa(_txtLeftText));
+          //  EventContainer.PublishEvent(EventPublisher.Events.LeftTextBoxChanged.ToString(), eventArg);
+        }
+
+        private void Lapa(string text)
+        {
+            Thread.Sleep(500);
+
+            if(_txtLeftText == text)
+            {
+                var eventArg = new EventArg(Id, _txtLeftText);
+                EventContainer.PublishEvent(EventPublisher.Events.LeftTextBoxChanged.ToString(), eventArg);
+            }
         }
 
         private void txtRight_TextChanged(object sender, EventArgs e)
